@@ -74,7 +74,7 @@ public class MvnURIProcessor implements Processor<Artifact> {
         // Now, add the dumped artifact
         URI dumpedURI = dumpedFile.toURI();
         Artifact newArtifact = processorContext.build(artifact.name(), dumpedURI);
-        processorContext.addArtifact(newArtifact);
+        processorContext.addArtifact(newArtifact, false);
 
     }
 

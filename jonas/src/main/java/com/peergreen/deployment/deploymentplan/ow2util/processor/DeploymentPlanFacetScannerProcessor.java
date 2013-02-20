@@ -200,7 +200,7 @@ public class DeploymentPlanFacetScannerProcessor implements Processor<Content> {
                                 }
                                 String name = attributesMap.get("id").concat(maven2.getGroupId()).concat(".").concat(maven2.getArtifactId()).concat(".").concat(type);
                                 Artifact artifact = processorContext.build(name, m2URI);
-                                processorContext.addArtifact(artifact);
+                                processorContext.addArtifact(artifact, false);
                             } catch (URISyntaxException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();

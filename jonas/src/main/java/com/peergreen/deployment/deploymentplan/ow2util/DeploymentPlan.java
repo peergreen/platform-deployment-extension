@@ -15,21 +15,9 @@
  */
 package com.peergreen.deployment.deploymentplan.ow2util;
 
-import java.util.List;
-
-import com.peergreen.deployment.Artifact;
 
 public class DeploymentPlan {
 
-    public List<Artifact> artifacts;
-
-    public List<Artifact> getArtifacts() {
-        return artifacts;
-    }
-
-    public void addArtifact(Artifact artifact) {
-        artifacts.add(artifact);
-    }
 
 
 }
