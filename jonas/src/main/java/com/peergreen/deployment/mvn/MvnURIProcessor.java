@@ -47,8 +47,10 @@ public class MvnURIProcessor implements Processor<Artifact> {
     @Override
     public void handle(Artifact artifact, ProcessorContext processorContext) throws ProcessorException {
 
+        String fileName = String.valueOf(artifact.uri().toString().hashCode()).concat(artifact.name());
+
         // Dump inputstream if not exists
-        File dumpedFile = new File(cacheDir, artifact.name());
+        File dumpedFile = new File(cacheDir, fileName);
 
         // File doesn't exists
         if (!dumpedFile.exists()) {
