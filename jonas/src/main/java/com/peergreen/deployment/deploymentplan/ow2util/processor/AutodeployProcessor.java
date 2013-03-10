@@ -87,7 +87,7 @@ public class AutodeployProcessor  implements Processor<Content> {
                         name = name.concat(mType);
 
                         Artifact artifact = processorContext.build(name, m2URI);
-                        processorContext.addArtifact(artifact, false);
+                        processorContext.addArtifact(artifact);
                     } catch (URISyntaxException e) {
                         // TODO Auto-generated catch block
                         e.printStackTrace();

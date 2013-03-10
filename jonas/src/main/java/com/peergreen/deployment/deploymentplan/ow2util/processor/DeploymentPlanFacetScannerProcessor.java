@@ -74,8 +74,6 @@ public class DeploymentPlanFacetScannerProcessor implements Processor<Content> {
 
         DeploymentPlan deploymentPlan = new DeploymentPlan();
 
-
-
         XMLEventReader xmlEventReader;
         try {
             xmlEventReader = xmlInputFactory.createXMLEventReader(new InputStreamReader(is));
@@ -200,7 +198,7 @@ public class DeploymentPlanFacetScannerProcessor implements Processor<Content> {
                                 }
                                 String name = attributesMap.get("id").concat(maven2.getGroupId()).concat(".").concat(maven2.getArtifactId()).concat(".").concat(type);
                                 Artifact artifact = processorContext.build(name, m2URI);
-                                processorContext.addArtifact(artifact, false);
+                                processorContext.addArtifact(artifact);
                             } catch (URISyntaxException e) {
                                 // TODO Auto-generated catch block
                                 e.printStackTrace();
