@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-  - Copyright 2012 Peergreen S.A.S.
+  - Copyright 2012-2013 Peergreen S.A.S.
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
   - You may obtain a copy of the License at
@@ -34,6 +34,12 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.compendium</artifactId>
+      <version>4.3.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
       <groupId>org.ow2.util.log</groupId>
       <artifactId>log-api</artifactId>
       <version>2.0.0</version>
@@ -54,7 +60,7 @@
     <dependency>
       <groupId>org.testng</groupId>
       <artifactId>testng</artifactId>
-      <version>6.7</version>
+      <version>6.8</version>
       <scope>test</scope>
     </dependency>
     <dependency>

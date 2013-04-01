@@ -1,0 +1,13 @@
+<configadmin xmlns="http://jonas.ow2.org/ns/configadmin/1.0">
+
+  <configuration pid="com.peergreen.Employee">
+    <property name="name">Guillaume</property>
+    <property name="role">Developer</property>
+  </configuration>
+
+  <factory-configuration pid="a.factory">
+    <property name="name">Wordpress</property>
+    <property name="category">Blog</property>
+  </factory-configuration>
+
+</configadmin>

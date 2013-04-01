@@ -1,0 +1,4 @@
+<configadmin xmlns="http://jonas.ow2.org/ns/configadmin/1.0"
+             xmlns:test="urn:test">
+  <test:bazar name="a" />
+</configadmin>
