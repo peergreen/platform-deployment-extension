@@ -24,7 +24,7 @@
   </parent>
   <groupId>com.peergreen.deployment.extension</groupId>
   <artifactId>extension</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <build>
@@ -79,9 +79,4 @@
       <layout>default</layout>
     </repository>
   </repositories>
-
-
-  <scm>
-    <tag>EXTENSION_1_0_0</tag>
-  </scm>
 </project>
