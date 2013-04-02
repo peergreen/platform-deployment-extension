@@ -37,15 +37,15 @@ public class MvnURIProcessor implements Processor<Artifact> {
     public MvnURIProcessor() {
         String userDir = System.getProperty("user.dir");
         cacheDir = new File(userDir + File.separator + "mvn-cache");
-
-        if (!cacheDir.exists()) {
-            cacheDir.mkdirs();
-        }
     }
 
 
     @Override
     public void handle(Artifact artifact, ProcessorContext processorContext) throws ProcessorException {
+
+        if (!cacheDir.exists()) {
+            cacheDir.mkdirs();
+        }
 
         String fileName = String.valueOf(artifact.uri().toString().hashCode()).concat(artifact.name());
 
