@@ -27,6 +27,14 @@
   <version>1.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+
+  <scm>
+    <connection>scm:git:https://forge.peergreen.com/git/git/platform/deployment-extension.git</connection>
+    <developerConnection>scm:git:https://forge.peergreen.com/git/git/platform/deployment-extension.git</developerConnection>
+    <url>https://forge.peergreen.com/git/summary/?r=platform/deployment-extension.git</url>
+    <tag>HEAD</tag>
+  </scm>
+
   <build>
     <defaultGoal>install</defaultGoal>
     <plugins>
