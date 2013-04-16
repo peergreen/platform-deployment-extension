@@ -47,7 +47,7 @@ public class MvnURIProcessor implements Processor<Artifact> {
             cacheDir.mkdirs();
         }
 
-        String fileName = String.valueOf(artifact.uri().toString().hashCode()).concat(artifact.name());
+        String fileName = String.valueOf(artifact.uri().toString().hashCode()).concat(artifact.name().replace(":", "_"));
 
         // Dump inputstream if not exists
         File dumpedFile = new File(cacheDir, fileName);
