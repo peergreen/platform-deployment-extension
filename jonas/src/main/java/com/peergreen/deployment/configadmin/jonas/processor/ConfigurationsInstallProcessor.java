@@ -17,28 +17,35 @@ package com.peergreen.deployment.configadmin.jonas.processor;
 
 import java.io.IOException;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+import org.apache.felix.ipojo.annotations.Requires;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
-import com.peergreen.deployment.Processor;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
 import com.peergreen.deployment.configadmin.jonas.ConfigurationInfo;
+import com.peergreen.deployment.processor.Phase;
+import com.peergreen.deployment.processor.handler.Processor;
 
 /**
  * Install the OSGi bundles on the gateway.
  * @author Florent Benoit
  */
-public class ConfigurationsInstallProcessor implements Processor<ConfigAdmin> {
+@Component
+@Instantiate
+@Processor
+@Phase("INSTALL")
+public class ConfigurationsInstallProcessor {
 
     private ConfigurationAdmin configurationAdmin;
 
-    public ConfigurationsInstallProcessor(ConfigurationAdmin configurationAdmin) {
+    public ConfigurationsInstallProcessor(@Requires ConfigurationAdmin configurationAdmin) {
         this.configurationAdmin = configurationAdmin;
     }
 
-    @Override
     public void handle(ConfigAdmin configAdmin, ProcessorContext context) throws ProcessorException {
 
         for (ConfigurationInfo info : configAdmin.getInfos()) {

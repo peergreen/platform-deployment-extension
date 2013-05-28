@@ -21,16 +21,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+
 import com.peergreen.deployment.Artifact;
-import com.peergreen.deployment.Processor;
+import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
+import com.peergreen.deployment.processor.Discovery;
+import com.peergreen.deployment.processor.Uri;
+import com.peergreen.deployment.processor.handler.Processor;
 
 /**
  * mvn: URI processor
  * @author Florent Benoit
  */
-public class MvnURIProcessor implements Processor<Artifact> {
+@Component
+@Instantiate
+@Processor
+@Discovery(DiscoveryPhasesLifecycle.URI_FETCHER)
+@Uri("mvn")
+public class MvnURIProcessor {
 
     private final File cacheDir;
 
@@ -39,8 +50,6 @@ public class MvnURIProcessor implements Processor<Artifact> {
         cacheDir = new File(userDir + File.separator + "mvn-cache");
     }
 
-
-    @Override
     public void handle(Artifact artifact, ProcessorContext processorContext) throws ProcessorException {
 
         if (!cacheDir.exists()) {

@@ -32,19 +32,32 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+
 import com.peergreen.deployment.Artifact;
-import com.peergreen.deployment.Processor;
+import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.deploymentplan.ow2util.DeploymentPlan;
 import com.peergreen.deployment.facet.content.Content;
 import com.peergreen.deployment.facet.content.ContentException;
+import com.peergreen.deployment.processor.Discovery;
+import com.peergreen.deployment.processor.Uri;
+import com.peergreen.deployment.processor.XmlNamespace;
+import com.peergreen.deployment.processor.handler.Processor;
 
 /**
  * Deployment plan scanner.
  * @author Florent Benoit
  */
-public class DeploymentPlanFacetScannerProcessor implements Processor<Content> {
+@Component
+@Instantiate
+@Processor
+@Discovery(DiscoveryPhasesLifecycle.DEPENDENCY_FINDER)
+@Uri(extension = "xml")
+@XmlNamespace("http://jonas.ow2.org/ns/deployment-plan/1.0")
+public class DeploymentPlanFacetScannerProcessor {
 
     private final XMLInputFactory xmlInputFactory;
 
@@ -61,7 +74,6 @@ public class DeploymentPlanFacetScannerProcessor implements Processor<Content> {
     /**
      * Needs to parse the XML file which is the deployment plan.
      */
-    @Override
     public void handle(Content content, ProcessorContext processorContext) throws ProcessorException {
 
         // Parse the content of the XML file

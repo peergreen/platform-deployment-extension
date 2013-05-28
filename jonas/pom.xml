@@ -47,13 +47,13 @@
       <groupId>org.apache.felix</groupId>
       <artifactId>org.apache.felix.ipojo.annotations</artifactId>
       <version>1.8.4</version>
-      <type>bundle</type>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.peergreen.deployment</groupId>
       <artifactId>deployment-api</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1-SNAPSHOT</version>
+      <scope>provided</scope>
     </dependency>
 
     <dependency>

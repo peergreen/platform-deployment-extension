@@ -21,16 +21,26 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+
 import com.peergreen.deployment.Artifact;
-import com.peergreen.deployment.Processor;
+import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.facet.content.Content;
 import com.peergreen.deployment.facet.content.ContentException;
+import com.peergreen.deployment.processor.Discovery;
+import com.peergreen.deployment.processor.Uri;
+import com.peergreen.deployment.processor.handler.Processor;
 
-public class AutodeployProcessor  implements Processor<Content> {
+@Component
+@Instantiate
+@Processor
+@Discovery(DiscoveryPhasesLifecycle.DEPENDENCY_FINDER)
+@Uri(extension = "properties")
+public class AutodeployProcessor {
 
-    @Override
     public void handle(Content content, ProcessorContext processorContext) throws ProcessorException {
         try {
 

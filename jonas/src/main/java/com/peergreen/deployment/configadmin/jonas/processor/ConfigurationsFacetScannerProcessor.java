@@ -21,19 +21,32 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 
-import com.peergreen.deployment.Processor;
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Instantiate;
+
+import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
 import com.peergreen.deployment.configadmin.jonas.processor.parser.ConfigAdminParser;
 import com.peergreen.deployment.facet.content.Content;
 import com.peergreen.deployment.facet.content.ContentException;
+import com.peergreen.deployment.processor.Discovery;
+import com.peergreen.deployment.processor.Uri;
+import com.peergreen.deployment.processor.XmlNamespace;
+import com.peergreen.deployment.processor.handler.Processor;
 
 /**
  * Deployment plan scanner.
  * @author Florent Benoit
  */
-public class ConfigurationsFacetScannerProcessor implements Processor<Content> {
+@Component
+@Instantiate
+@Processor
+@Discovery(DiscoveryPhasesLifecycle.DEPENDENCY_FINDER)
+@Uri(extension = "xml")
+@XmlNamespace(ConfigAdminParser.NAMESPACE)
+public class ConfigurationsFacetScannerProcessor {
 
     private final XMLInputFactory factory;
     private final ConfigAdminParser parser;
@@ -50,7 +63,6 @@ public class ConfigurationsFacetScannerProcessor implements Processor<Content> {
     /**
      * Needs to parse the XML file which is the deployment plan.
      */
-    @Override
     public void handle(Content content, ProcessorContext context) throws ProcessorException {
 
         // Parse the content of the XML file
