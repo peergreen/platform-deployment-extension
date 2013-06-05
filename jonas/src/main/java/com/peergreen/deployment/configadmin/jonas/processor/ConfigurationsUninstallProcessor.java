@@ -25,14 +25,12 @@ import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
 import com.peergreen.deployment.processor.Phase;
-import com.peergreen.deployment.processor.handler.Processor;
+import com.peergreen.deployment.processor.Processor;
 
 /**
  * Install the OSGi bundles on the gateway.
  * @author Florent Benoit
  */
-@Component
-@Instantiate
 @Processor
 @Phase("IUNINSTALL")
 public class ConfigurationsUninstallProcessor {

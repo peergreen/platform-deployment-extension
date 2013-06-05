@@ -28,14 +28,12 @@ import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
 import com.peergreen.deployment.configadmin.jonas.ConfigurationInfo;
 import com.peergreen.deployment.processor.Phase;
-import com.peergreen.deployment.processor.handler.Processor;
+import com.peergreen.deployment.processor.Processor;
 
 /**
  * Install the OSGi bundles on the gateway.
  * @author Florent Benoit
  */
-@Component
-@Instantiate
 @Processor
 @Phase("INSTALL")
 public class ConfigurationsInstallProcessor {

@@ -32,10 +32,8 @@ import com.peergreen.deployment.facet.content.Content;
 import com.peergreen.deployment.facet.content.ContentException;
 import com.peergreen.deployment.processor.Discovery;
 import com.peergreen.deployment.processor.Uri;
-import com.peergreen.deployment.processor.handler.Processor;
+import com.peergreen.deployment.processor.Processor;
 
-@Component
-@Instantiate
 @Processor
 @Discovery(DiscoveryPhasesLifecycle.DEPENDENCY_FINDER)
 @Uri(extension = "properties")

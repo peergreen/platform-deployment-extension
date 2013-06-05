@@ -45,14 +45,12 @@ import com.peergreen.deployment.facet.content.ContentException;
 import com.peergreen.deployment.processor.Discovery;
 import com.peergreen.deployment.processor.Uri;
 import com.peergreen.deployment.processor.XmlNamespace;
-import com.peergreen.deployment.processor.handler.Processor;
+import com.peergreen.deployment.processor.Processor;
 
 /**
  * Deployment plan scanner.
  * @author Florent Benoit
  */
-@Component
-@Instantiate
 @Processor
 @Discovery(DiscoveryPhasesLifecycle.DEPENDENCY_FINDER)
 @Uri(extension = "xml")

@@ -30,14 +30,12 @@ import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.processor.Discovery;
 import com.peergreen.deployment.processor.Uri;
-import com.peergreen.deployment.processor.handler.Processor;
+import com.peergreen.deployment.processor.Processor;
 
 /**
  * mvn: URI processor
  * @author Florent Benoit
  */
-@Component
-@Instantiate
 @Processor
 @Discovery(DiscoveryPhasesLifecycle.URI_FETCHER)
 @Uri("mvn")
