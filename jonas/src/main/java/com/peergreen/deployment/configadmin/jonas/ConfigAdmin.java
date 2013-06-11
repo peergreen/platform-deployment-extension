@@ -19,6 +19,10 @@ public class ConfigAdmin {
         configurations.put(info, null);
     }
 
+    public Configuration remove(ConfigurationInfo info) {
+        return configurations.remove(info);
+    }
+
     public Set<ConfigurationInfo> getInfos() {
         return configurations.keySet();
     }

@@ -31,11 +31,11 @@ import com.peergreen.deployment.processor.Phase;
 import com.peergreen.deployment.processor.Processor;
 
 /**
- * Install the OSGi bundles on the gateway.
- * @author Florent Benoit
+ * Create managed service / manged service factory configurations
+ * @author Guillaume Sauthier
  */
 @Processor
-@Phase("INSTALL")
+@Phase("create")
 public class ConfigurationsInstallProcessor {
 
     private ConfigurationAdmin configurationAdmin;

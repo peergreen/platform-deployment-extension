@@ -21,14 +21,14 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 
-import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
+import org.apache.felix.ipojo.annotations.Requires;
 
 import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
 import com.peergreen.deployment.configadmin.jonas.processor.parser.ConfigAdminParser;
+import com.peergreen.deployment.configadmin.jonas.processor.parser.DefaultConfigAdminParser;
 import com.peergreen.deployment.facet.content.Content;
 import com.peergreen.deployment.facet.content.ContentException;
 import com.peergreen.deployment.processor.Discovery;
@@ -49,11 +49,12 @@ public class ConfigurationsFacetScannerProcessor {
     private final XMLInputFactory factory;
     private final ConfigAdminParser parser;
 
-    public ConfigurationsFacetScannerProcessor() {
-        this(XMLInputFactory.newInstance(), new ConfigAdminParser());
+    public ConfigurationsFacetScannerProcessor(@Requires ConfigAdminParser parser) {
+        this(XMLInputFactory.newInstance(), parser);
     }
 
-    public ConfigurationsFacetScannerProcessor(XMLInputFactory factory, ConfigAdminParser configAdminParser) {
+    public ConfigurationsFacetScannerProcessor(XMLInputFactory factory,
+                                               ConfigAdminParser configAdminParser) {
         this.factory = factory;
         this.parser = configAdminParser;
     }

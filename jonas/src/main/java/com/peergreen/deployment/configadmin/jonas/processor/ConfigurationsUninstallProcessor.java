@@ -28,11 +28,11 @@ import com.peergreen.deployment.processor.Phase;
 import com.peergreen.deployment.processor.Processor;
 
 /**
- * Install the OSGi bundles on the gateway.
- * @author Florent Benoit
+ * Delete the managed configurations from config admin service.
+ * @author Guillaume Sauthier
  */
 @Processor
-@Phase("UNINSTALL")
+@Phase("delete")
 public class ConfigurationsUninstallProcessor {
 
     public void handle(ConfigAdmin configAdmin, ProcessorContext context) throws ProcessorException {

@@ -17,42 +17,93 @@ package com.peergreen.deployment.configadmin.jonas.processor;
 
 import java.io.IOException;
 
+import org.apache.felix.ipojo.annotations.Requires;
 import org.osgi.service.cm.Configuration;
+import org.osgi.service.cm.ConfigurationAdmin;
 
-import com.peergreen.deployment.Processor;
+import com.peergreen.deployment.DeploymentContext;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
-import com.peergreen.deployment.configadmin.jonas.processor.parser.ConfigAdminParser;
+import com.peergreen.deployment.configadmin.jonas.ConfigurationInfo;
+import com.peergreen.deployment.configadmin.jonas.processor.delta.Delta;
+import com.peergreen.deployment.processor.Phase;
+import com.peergreen.deployment.processor.Processor;
 
 /**
- * Install the OSGi bundles on the gateway.
- * @author Florent Benoit
+ * Apply the delta computed on earlier phases
+ * @author Guillaume Sauthier
  */
-public class ConfigurationsUpdateProcessor implements Processor<ConfigAdmin> {
+@Processor
+@Phase("update")
+public class ConfigurationsUpdateProcessor {
 
-    private final ConfigAdminParser parser;
+    private ConfigurationAdmin configurationAdmin;
 
-    public ConfigurationsUpdateProcessor(ConfigAdminParser parser) {
-        this.parser = parser;
+    public ConfigurationsUpdateProcessor(@Requires ConfigurationAdmin configurationAdmin) {
+        this.configurationAdmin = configurationAdmin;
     }
 
-    @Override
-    public void handle(ConfigAdmin configAdmin, ProcessorContext context) throws ProcessorException {
+    public void handle(DeploymentContext context, ProcessorContext processorContext) throws ProcessorException {
+        Deltas deltas = context.getFacet(Deltas.class);
+        ConfigAdmin configAdmin = context.getFacet(ConfigAdmin.class);
 
-        // Cannot access both the ConfigAdmin facet and the new Content
-        //context.
-        // Mayh be I have to use DeploymentContext
-        try {
-            for (Configuration c : configAdmin.getConfigurations()) {
-                try {
-                    c.delete();
-                } catch (IOException e) {
-                    // TODO Ignore and log something
-                }
+        for (Delta delta : deltas) {
+            switch (delta.getKind()) {
+                case ADDED:
+                    createConfiguration(configAdmin, delta.getActual());
+                    break;
+                case REMOVED:
+                    deleteConfiguration(configAdmin, delta.getPrevious());
+                    break;
+                case CHANGED:
+                    updateConfiguration(configAdmin, delta.getPrevious(), delta.getActual());
+                    break;
+                case UNCHANGED:
+                    // do nothing
             }
-        } finally {
-            configAdmin.clear();
+        }
+
+    }
+
+    private void createConfiguration(final ConfigAdmin configAdmin, final ConfigurationInfo info) {
+        try {
+            // Add the model
+            configAdmin.add(info);
+
+            // Really create the OSGi Configuration
+            Configuration configuration;
+            if (info.isFactory()) {
+                configuration = configurationAdmin.createFactoryConfiguration(info.getPid(), null);
+            } else {
+                configuration = configurationAdmin.getConfiguration(info.getPid(), null);
+            }
+            // Update the config and update the model
+            configuration.update(info.getProperties());
+            configAdmin.associate(info, configuration);
+        } catch (IOException e) {
+            // Ignored ATM
+        }
+    }
+
+    private void deleteConfiguration(final ConfigAdmin configAdmin, final ConfigurationInfo info) {
+        try {
+            Configuration configuration = configAdmin.remove(info);
+            configuration.delete();
+        } catch (IOException e) {
+            // Ignored ATM
+        }
+    }
+
+    private void updateConfiguration(final ConfigAdmin configAdmin,
+                                     final ConfigurationInfo previous,
+                                     final ConfigurationInfo actual) {
+        try {
+            Configuration configuration = configAdmin.remove(previous);
+            configuration.update(actual.getProperties());
+            configAdmin.associate(actual, configuration);
+        } catch (IOException e) {
+            // Ignored ATM
         }
     }
 

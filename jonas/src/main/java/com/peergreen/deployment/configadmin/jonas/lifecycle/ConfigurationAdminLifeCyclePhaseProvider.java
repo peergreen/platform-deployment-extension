@@ -15,6 +15,7 @@
  */
 package com.peergreen.deployment.configadmin.jonas.lifecycle;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -24,9 +25,9 @@ import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
 
 public class ConfigurationAdminLifeCyclePhaseProvider implements FacetLifeCyclePhaseProvider<ConfigAdmin> {
 
-    private static final List<String> DEPLOY_PHASES = Collections.singletonList("INSTALL");
-    private static final List<String> UPDATE_PHASES = Collections.singletonList("UPDATE");
-    private static final List<String> UNDEPLOY_PHASES = Collections.singletonList("UNINSTALL");
+    private static final List<String> DEPLOY_PHASES = Collections.singletonList("create");
+    private static final List<String> UPDATE_PHASES = Arrays.asList("compute-diff", "update");
+    private static final List<String> UNDEPLOY_PHASES = Collections.singletonList("delete");
 
     @Override
     public List<String> getLifeCyclePhases(DeploymentMode deploymentMode) {
