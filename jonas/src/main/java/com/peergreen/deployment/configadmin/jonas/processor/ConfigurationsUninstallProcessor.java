@@ -32,7 +32,7 @@ import com.peergreen.deployment.processor.Processor;
  * @author Florent Benoit
  */
 @Processor
-@Phase("IUNINSTALL")
+@Phase("UNINSTALL")
 public class ConfigurationsUninstallProcessor {
 
     public void handle(ConfigAdmin configAdmin, ProcessorContext context) throws ProcessorException {
