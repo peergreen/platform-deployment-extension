@@ -25,7 +25,7 @@ import javax.xml.stream.XMLStreamException;
 
 import org.apache.felix.ipojo.annotations.Requires;
 
-import com.peergreen.deployment.DeploymentContext;
+import com.peergreen.deployment.Artifact;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
@@ -52,18 +52,18 @@ public class ConfigurationsDeltaProcessor {
         this.deltaService = deltaService;
     }
 
-    public void handle(DeploymentContext context, ProcessorContext processorContext) throws ProcessorException {
+    public void handle(Artifact artifact, ProcessorContext processorContext) throws ProcessorException {
         try {
-            URI artifact = context.getArtifact().uri();
-            ConfigAdmin latest = parser.parse(artifact.toURL());
-            ConfigAdmin previous = context.getFacet(ConfigAdmin.class);
+            URI uri = artifact.uri();
+            ConfigAdmin latest = parser.parse(uri.toURL());
+            ConfigAdmin previous = artifact.as(ConfigAdmin.class);
 
             List<Delta> deltas = deltaService.delta(previous, latest);
             processorContext.addFacet(Deltas.class, new Deltas(deltas));
         } catch (XMLStreamException e) {
-            throw new ProcessorException(format("Cannot parse artifact's content for %s", context.getArtifact()), e);
+            throw new ProcessorException(format("Cannot parse artifact's content for %s", artifact), e);
         } catch (MalformedURLException e) {
-            throw new ProcessorException(format("'%s' is not adaptable to a valid URL", context.getArtifact().uri()), e);
+            throw new ProcessorException(format("'%s' is not adaptable to a valid URL", artifact.uri()), e);
         }
     }
 

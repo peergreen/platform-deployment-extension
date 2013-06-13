@@ -21,7 +21,7 @@ import org.apache.felix.ipojo.annotations.Requires;
 import org.osgi.service.cm.Configuration;
 import org.osgi.service.cm.ConfigurationAdmin;
 
-import com.peergreen.deployment.DeploymentContext;
+import com.peergreen.deployment.Artifact;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
@@ -44,9 +44,9 @@ public class ConfigurationsUpdateProcessor {
         this.configurationAdmin = configurationAdmin;
     }
 
-    public void handle(DeploymentContext context, ProcessorContext processorContext) throws ProcessorException {
-        Deltas deltas = context.getFacet(Deltas.class);
-        ConfigAdmin configAdmin = context.getFacet(ConfigAdmin.class);
+    public void handle(Artifact artifact, ProcessorContext processorContext) throws ProcessorException {
+        Deltas deltas = artifact.as(Deltas.class);
+        ConfigAdmin configAdmin = artifact.as(ConfigAdmin.class);
 
         for (Delta delta : deltas) {
             switch (delta.getKind()) {
