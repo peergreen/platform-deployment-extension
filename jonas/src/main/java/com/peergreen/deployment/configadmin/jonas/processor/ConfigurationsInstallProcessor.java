@@ -47,22 +47,17 @@ public class ConfigurationsInstallProcessor {
     public void handle(ConfigAdmin configAdmin, ProcessorContext context) throws ProcessorException {
 
         for (ConfigurationInfo info : configAdmin.getInfos()) {
-            if (info.isFactory()) {
-                try {
-                    Configuration configuration = configurationAdmin.createFactoryConfiguration(info.getPid(), null);
-                    configuration.update(info.getProperties());
-                    configAdmin.associate(info, configuration);
-                } catch (IOException e) {
-                    // TODO Log a warning
+            try {
+                Configuration configuration;
+                if (info.isFactory()) {
+                    configuration = configurationAdmin.createFactoryConfiguration(info.getPid(), null);
+                } else {
+                    configuration = configurationAdmin.getConfiguration(info.getPid(), null);
                 }
-            } else {
-                try {
-                    Configuration c = configurationAdmin.getConfiguration(info.getPid(), null);
-                    c.update(info.getProperties());
-                    configAdmin.associate(info, c);
-                } catch (IOException e) {
-                    // Ignored ATM, continue
-                }
+                configuration.update(info.getProperties());
+                configAdmin.associate(info, configuration);
+            } catch (IOException e) {
+                // Ignored ATM
             }
         }
     }
