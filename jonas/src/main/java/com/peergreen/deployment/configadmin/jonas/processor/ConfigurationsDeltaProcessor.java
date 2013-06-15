@@ -41,7 +41,7 @@ import com.peergreen.deployment.processor.Processor;
  */
 @Processor
 @Phase("compute-diff")
-public class ConfigurationsDeltaProcessor {
+public class ConfigurationsDeltaProcessor extends AbstractConfigurationsProcessor {
 
     private final ConfigAdminParser parser;
     private final ConfigAdminDeltaService deltaService;
@@ -56,9 +56,11 @@ public class ConfigurationsDeltaProcessor {
         try {
             URI uri = artifact.uri();
             ConfigAdmin latest = parser.parse(uri.toURL());
-            ConfigAdmin previous = artifact.as(ConfigAdmin.class);
+            managePersistence(processorContext, latest);
 
+            ConfigAdmin previous = artifact.as(ConfigAdmin.class);
             List<Delta> deltas = deltaService.delta(previous, latest);
+
             processorContext.addFacet(Deltas.class, new Deltas(deltas));
         } catch (XMLStreamException e) {
             throw new ProcessorException(format("Cannot parse artifact's content for %s", artifact), e);

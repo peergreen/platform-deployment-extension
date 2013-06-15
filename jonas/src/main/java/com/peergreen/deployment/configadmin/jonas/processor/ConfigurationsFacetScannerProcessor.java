@@ -27,10 +27,12 @@ import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.configadmin.jonas.ConfigAdmin;
+import com.peergreen.deployment.configadmin.jonas.ConfigurationInfo;
+import com.peergreen.deployment.configadmin.jonas.Constants;
 import com.peergreen.deployment.configadmin.jonas.processor.parser.ConfigAdminParser;
-import com.peergreen.deployment.configadmin.jonas.processor.parser.DefaultConfigAdminParser;
 import com.peergreen.deployment.facet.content.Content;
 import com.peergreen.deployment.facet.content.ContentException;
+import com.peergreen.deployment.model.view.ArtifactModelPersistenceView;
 import com.peergreen.deployment.processor.Discovery;
 import com.peergreen.deployment.processor.Uri;
 import com.peergreen.deployment.processor.XmlNamespace;
@@ -44,7 +46,7 @@ import com.peergreen.deployment.processor.Processor;
 @Discovery(DiscoveryPhasesLifecycle.DEPENDENCY_FINDER)
 @Uri(extension = "xml")
 @XmlNamespace(ConfigAdminParser.NAMESPACE)
-public class ConfigurationsFacetScannerProcessor {
+public class ConfigurationsFacetScannerProcessor extends AbstractConfigurationsProcessor {
 
     private final XMLInputFactory factory;
     private final ConfigAdminParser parser;
@@ -73,9 +75,14 @@ public class ConfigurationsFacetScannerProcessor {
         }
 
         try {
+            // XML Parsing
             XMLEventReader reader = factory.createXMLEventReader(new InputStreamReader(is));
-            // Parse + add facet
-            context.addFacet(ConfigAdmin.class, parser.parse(reader));
+            ConfigAdmin configAdmin = parser.parse(reader);
+
+            // Pre-process
+            managePersistence(context, configAdmin);
+
+            context.addFacet(ConfigAdmin.class, configAdmin);
         } catch (XMLStreamException e) {
             throw new ProcessorException("Unable to load configurations", e);
         }

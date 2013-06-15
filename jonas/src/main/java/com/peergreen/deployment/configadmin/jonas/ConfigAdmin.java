@@ -7,11 +7,15 @@ import java.util.Set;
 
 import org.osgi.service.cm.Configuration;
 
+import com.peergreen.deployment.configadmin.jonas.builder.ConfigAdminFacetBuilder;
+import com.peergreen.deployment.facet.FacetBuilderReference;
+
 /**
  * User: guillaume
  * Date: 27/03/13
  * Time: 21:23
  */
+@FacetBuilderReference(ConfigAdminFacetBuilder.class)
 public class ConfigAdmin {
     private final Map<ConfigurationInfo, Configuration> configurations = new HashMap<>();
 
