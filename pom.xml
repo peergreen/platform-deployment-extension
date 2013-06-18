@@ -62,7 +62,7 @@
           <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>bnd-ipojo-plugin</artifactId>
-            <version>1.10.1-SNAPSHOT</version>
+            <version>1.10.1</version>
           </dependency>
         </dependencies>
       </plugin>
@@ -86,5 +86,24 @@
       <url>https://forge.peergreen.com/nexus/content/repositories/releases/</url>
       <layout>default</layout>
     </repository>
+
+    <repository>
+      <!-- TODO remove when iPOJO 1.10.1 will be promoted -->
+      <id>apache-felix-ipojo</id>
+      <name>Apache Felix iPOJO Staging Repository</name>
+      <url>https://repository.apache.org/content/repositories/orgapachefelix-021/</url>
+      <snapshots><enabled>false</enabled></snapshots>
+    </repository>
   </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <!-- TODO remove when iPOJO 1.10.1 will be promoted -->
+      <id>apache-felix-ipojo-plugin</id>
+      <name>Apache Felix iPOJO Staging Repository</name>
+      <url>https://repository.apache.org/content/repositories/orgapachefelix-021/</url>
+      <snapshots><enabled>false</enabled></snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+
 </project>
