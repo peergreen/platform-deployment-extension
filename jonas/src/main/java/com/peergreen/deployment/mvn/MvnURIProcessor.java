@@ -19,18 +19,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
-
-import org.apache.felix.ipojo.annotations.Component;
-import org.apache.felix.ipojo.annotations.Instantiate;
 
 import com.peergreen.deployment.Artifact;
 import com.peergreen.deployment.DiscoveryPhasesLifecycle;
 import com.peergreen.deployment.ProcessorContext;
 import com.peergreen.deployment.ProcessorException;
 import com.peergreen.deployment.processor.Discovery;
-import com.peergreen.deployment.processor.Uri;
 import com.peergreen.deployment.processor.Processor;
+import com.peergreen.deployment.processor.Uri;
 
 /**
  * mvn: URI processor
@@ -54,10 +52,8 @@ public class MvnURIProcessor {
             cacheDir.mkdirs();
         }
 
-        String fileName = String.valueOf(artifact.uri().toString().hashCode()).concat(artifact.name().replace(":", "_"));
-
         // Dump inputstream if not exists
-        File dumpedFile = new File(cacheDir, fileName);
+        File dumpedFile = new File(cacheDir, getFileName(artifact));
 
         // File doesn't exists
         if (!dumpedFile.exists()) {
@@ -87,5 +83,27 @@ public class MvnURIProcessor {
 
     }
 
+
+    /**
+     * Gets filename from given artifact
+     * @param artifact
+     * @return the filename extracted from mvn URI
+     * @throws ProcessorException
+     */
+    protected String getFileName(Artifact artifact) throws ProcessorException {
+        Parser parser;
+        try {
+            parser = new Parser(artifact.uri().toString().substring(4));
+        } catch (MalformedURLException e) {
+            throw new ProcessorException("Invalid URI '" + artifact.uri() + "'", e);
+        }
+
+        String classifier = "";
+        if (parser.getClassifier() != null) {
+            classifier = "-".concat(parser.getClassifier());
+        }
+        return parser.getGroup().concat("-").concat(parser.getArtifact()).concat(classifier).concat("-").concat(parser.getVersion()).concat(".").concat(parser.getType());
+
+    }
 
 }
