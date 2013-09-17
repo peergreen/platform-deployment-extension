@@ -71,6 +71,7 @@
   
   <modules>
     <module>jonas</module>
+    <module>peergreen</module>
   </modules>
 
   <repositories>
