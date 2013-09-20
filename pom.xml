@@ -22,6 +22,9 @@
   <version>1.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <properties>
+    <deployment-api.version>1.0.2</deployment-api.version>
+  </properties>
 
   <scm>
     <connection>scm:git:https://forge.peergreen.com/git/git/platform/deployment-extension.git</connection>

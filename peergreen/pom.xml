@@ -25,7 +25,7 @@
     <dependency>
       <groupId>com.peergreen.deployment</groupId>
       <artifactId>deployment-api</artifactId>
-      <version>1.0.2-SNAPSHOT</version>
+      <version>${deployment-api.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
@@ -50,7 +50,7 @@
     <dependency>
       <groupId>com.peergreen.deployment</groupId>
       <artifactId>deployment-internal</artifactId>
-      <version>1.0.2-SNAPSHOT</version>
+      <version>1.0.2</version>
       <scope>test</scope>
     </dependency>
     <dependency>
