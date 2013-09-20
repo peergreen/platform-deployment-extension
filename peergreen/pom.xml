@@ -14,7 +14,7 @@
   <parent>
     <groupId>com.peergreen.deployment.extension</groupId>
     <artifactId>extension</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
   </parent>
   <artifactId>extension-peergreen</artifactId>
   <packaging>bundle</packaging>
